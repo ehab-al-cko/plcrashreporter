@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.source           = { :git => 'https://github.com/microsoft/plcrashreporter.git', :tag => spec.version }
   
   # Includes core files, plus all C source/header files from the protobuf-c dependency
-  spec.source_files     = 'Source/**/*.{h,m}', 'Dependencies/protobuf-c/**/*.{h,c}'
+  spec.source_files     = 'Source/**/*.{h,m}', 'Dependencies'
   
   # **THE FIX:** This tells CocoaPods to treat the 'Dependencies' folder as the root for header mapping.
   # This makes the compiler look for headers at: (PODS_ROOT)/PLCrashReporter/Dependencies/protobuf-c/protobuf-c.h
