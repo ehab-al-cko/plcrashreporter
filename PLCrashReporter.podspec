@@ -9,13 +9,16 @@ Pod::Spec.new do |spec|
   spec.authors          = { 'Microsoft' => 'appcentersdk@microsoft.com' }
   spec.swift_version    = '5.0'
 
-  # 🔑 NEW SOURCE: Use the direct ZIP download link  
-  spec.source      = { :http     => "https://github.com/microsoft/plcrashreporter/archive/refs/tags/1.12.0.zip",
-                       :flatten  => true }
+  spec.source           = { :git => 'https://github.com/microsoft/plcrashreporter.git', :tag => spec.version }
   
-  # FIX: Explicitly and aggressively set the search path for angle bracket imports
-  # This targets the 'Dependencies' folder which contains 'protobuf-c/'
+  # Includes core files and the protobuf-c source/header files
+  spec.source_files     = 'Source/**/*.{h,m}', 'Dependencies/protobuf-c/**/*.{h,c}'
+  
+  # 🔑 THE DEFINITIVE FIX: Manually inject the 'Dependencies' folder into the search path.
+  # This ensures the compiler finds the path: Dependencies/protobuf-c/protobuf-c.h 
   spec.pod_target_xcconfig = { 
+    # $(inherited) ensures existing paths are not overwritten.
+    # $PODS_ROOT is used for the absolute path to the Pods directory.
     'HEADER_SEARCH_PATHS' => '$(inherited) "${PODS_ROOT}/PLCrashReporter/Dependencies"'
   }
   
