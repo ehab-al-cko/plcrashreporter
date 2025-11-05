@@ -9,11 +9,9 @@ Pod::Spec.new do |spec|
   spec.authors          = { 'Microsoft' => 'appcentersdk@microsoft.com' }
   spec.swift_version    = '5.0'
 
-  # 🔑 NEW SOURCE: Use the direct ZIP download link
-  spec.source           = { :http => 'https://github.com/microsoft/plcrashreporter/archive/refs/tags/1.12.0.zip' }
-  
-  # Includes core files and the protobuf-c source/header files
-  spec.source_files     = 'Source/**/*.{h,m}', 'Dependencies/protobuf-c/**/*.{h,c}'
+  # 🔑 NEW SOURCE: Use the direct ZIP download link  
+  spec.source      = { :http     => "https://github.com/microsoft/plcrashreporter/archive/refs/tags/1.12.0.zip",
+                       :flatten  => true }
   
   # FIX: Explicitly and aggressively set the search path for angle bracket imports
   # This targets the 'Dependencies' folder which contains 'protobuf-c/'
