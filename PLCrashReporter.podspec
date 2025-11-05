@@ -1,6 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name             = 'PLCrashReporter'
   spec.version          = '1.12.0'
+  spec.summary          = 'Reliable, open-source crash reporting for iOS, macOS and tvOS.'
   # ... (other metadata) ...
 
   spec.source           = { :git => 'https://github.com/microsoft/plcrashreporter.git', :tag => spec.version }
@@ -8,16 +9,16 @@ Pod::Spec.new do |spec|
   # Includes core files and the protobuf-c source/header files
   spec.source_files     = 'Source/**/*.{h,m}', 'Dependencies/protobuf-c/**/*.{h,c}'
   
-  # 1. (Kept): Creates the "protobuf-c/" folder structure for headers
-  spec.header_mappings_dir = 'Dependencies' 
+  # 1. FIX: Explicitly define the protobuf-c headers as public
+  # This makes them available for angle bracket imports.
+  spec.public_header_files = 'Dependencies/protobuf-c/protobuf-c.h' 
   
-  # 2. (NEW/REINTRODUCED FIX): Exposes the resulting header path to the compiler 
-  # This setting tells the compiler where to look for the headers imported with <...>
-  spec.pod_target_xcconfig = { 
-    # Expose the Pod's private headers to itself, where 'Dependencies' is the root 
-    # and the files are mapped into the build products directory.
-    'HEADER_SEARCH_PATHS' => '$(PODS_TARGET_ROOT)/PLCrashReporter'
-  }
+  # 2. FIX: Preserve the folder structure starting from the 'Dependencies' folder
+  # This makes the compiler look for the header at <protobuf-c/protobuf-c.h>
+  spec.header_mappings_dir = 'Dependencies' 
+
+  # We are removing the old spec.pod_target_xcconfig line, as the public headers 
+  # configuration should take care of the search paths automatically.
   
   spec.resource_bundles = {
     'PLCrashReporter' => 'Source/Resources/**'
