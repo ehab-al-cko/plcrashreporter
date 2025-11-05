@@ -21,13 +21,13 @@ Pod::Spec.new do |spec|
 
 spec.user_target_xcconfig = {
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
-    'VALID_ARCHS' => 'arm64',
-    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64'
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64',
+    'VALID_ARCHS' => 'arm64'
   }
 
   spec.pod_target_xcconfig = {
     'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64',
-    'VALID_ARCHS' => 'arm64'و
+    'VALID_ARCHS' => 'arm64',
     'OTHER_LDFLAGS' => '-lc++' 
   }
 end
