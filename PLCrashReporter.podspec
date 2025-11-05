@@ -1,5 +1,4 @@
 Pod::Spec.new do |spec|
-  spec.cocoapods_version = '>= 1.10'
   spec.name        = 'PLCrashReporter'
   spec.version     = '1.12.0'
   spec.summary     = 'Reliable, open-source crash reporting for iOS, macOS and tvOS.'
@@ -9,15 +8,26 @@ Pod::Spec.new do |spec|
   spec.license     = { :type => 'MIT', :file => 'LICENSE.txt' }
   spec.authors     = { 'Microsoft' => 'appcentersdk@microsoft.com' }
 
-  spec.source      = { :http     => "https://github.com/microsoft/plcrashreporter/releases/download/#{spec.version}/PLCrashReporter-Static-#{spec.version}.xcframework.zip",
+  spec.source      = { :http     => "https://github.com/microsoft/plcrashreporter/releases/download/#{spec.version}/PLCrashReporter-XCFramework-#{spec.version}.zip",
                        :flatten  => true }
 
   spec.resource_bundle = { 'PLCrashReporter' => 'CrashReporter.xcframework/PrivacyInfo.xcprivacy' }
 
-  spec.ios.deployment_target    = '12.0'
+  spec.ios.deployment_target    = '13.0'
   spec.osx.deployment_target    = '11.5'
   spec.tvos.deployment_target   = '12.0'
   spec.vendored_frameworks = "CrashReporter.xcframework"
   spec.libraries = 'c++'
-  spec.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '-lc++' }
+
+spec.user_target_xcconfig = {
+    'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
+    'VALID_ARCHS' => 'arm64',
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64'
+  }
+
+  spec.pod_target_xcconfig = {
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64',
+    'VALID_ARCHS' => 'arm64'و
+    'OTHER_LDFLAGS' => '-lc++' 
+  }
 end
