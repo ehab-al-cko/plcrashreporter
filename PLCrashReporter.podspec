@@ -15,6 +15,10 @@ Pod::Spec.new do |spec|
     'PLCrashReporter' => 'Source/Resources/**'
   }
 
+  spec.pod_target_xcconfig = { 
+    'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/PLCrashReporter/Dependencies' 
+  }
+
   # Platform-specific deployment targets
   spec.ios.deployment_target    = '13.0'
   spec.osx.deployment_target    = '11.5'
