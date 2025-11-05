@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   spec.swift_version    = '5.0'
 
   spec.source           = { :git => 'https://github.com/microsoft/plcrashreporter.git', :tag => spec.version }
-  spec.source_files     = 'Source/**/*.{h,m}', 'Dependencies/protobuf-c/**'
+  spec.source_files     = 'Source/**/*.{h,m}', 'Dependencies/protobuf-c/****/*.{h,c}'
   spec.resource_bundles = {
     'PLCrashReporter' => 'Source/Resources/**'
   }
@@ -18,6 +18,7 @@ Pod::Spec.new do |spec|
   spec.pod_target_xcconfig = { 
     'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/PLCrashReporter/Dependencies' 
   }
+  spec.header_mappings_dir = 'Dependencies'
 
   # Platform-specific deployment targets
   spec.ios.deployment_target    = '13.0'
