@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
   # **THE FIX:** This tells CocoaPods to treat the 'Dependencies' folder as the root for header mapping.
   # This makes the compiler look for headers at: (PODS_ROOT)/PLCrashReporter/Dependencies/protobuf-c/protobuf-c.h
   # ... which satisfies the #include "protobuf-c/protobuf-c.h" statement.
-  spec.header_mappings_dir = 'Dependencies' 
+  spec.header_mappings_dir = 'protobuf-c' 
   
   spec.resource_bundles = {
     'PLCrashReporter' => 'Source/Resources/**'
