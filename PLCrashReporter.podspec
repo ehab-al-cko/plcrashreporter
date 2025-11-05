@@ -6,19 +6,19 @@ Pod::Spec.new do |spec|
 
   spec.source           = { :git => 'https://github.com/microsoft/plcrashreporter.git', :tag => spec.version }
   
-  # Includes core files and the protobuf-c source/header files
   spec.source_files     = 'Source/**/*.{h,m}', 'Dependencies/protobuf-c/**/*.{h,c}'
   
-  # 1. FIX: Explicitly define the protobuf-c headers as public
-  # This makes them available for angle bracket imports.
+  # 1. Designate the header as public
   spec.public_header_files = 'Dependencies/protobuf-c/protobuf-c.h' 
   
-  # 2. FIX: Preserve the folder structure starting from the 'Dependencies' folder
-  # This makes the compiler look for the header at <protobuf-c/protobuf-c.h>
+  # 2. Preserve the folder structure
   spec.header_mappings_dir = 'Dependencies' 
-
-  # We are removing the old spec.pod_target_xcconfig line, as the public headers 
-  # configuration should take care of the search paths automatically.
+  
+  # 3. FIX: Explicitly and aggressively set the search path for angle bracket imports
+  # This path points to where public headers are typically placed, relative to the target root.
+  spec.pod_target_xcconfig = { 
+    'HEADER_SEARCH_PATHS' => '$(inherited) "$(PODS_TARGET_ROOT)/PLCrashReporter/Dependencies" '
+  }
   
   spec.resource_bundles = {
     'PLCrashReporter' => 'Source/Resources/**'
