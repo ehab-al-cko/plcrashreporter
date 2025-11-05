@@ -26,6 +26,7 @@ spec.user_target_xcconfig = {
   }
 
   spec.pod_target_xcconfig = {
+    'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
     'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64',
     'VALID_ARCHS' => 'arm64',
     'OTHER_LDFLAGS' => '-lc++' 
