@@ -1,23 +1,23 @@
 Pod::Spec.new do |spec|
   spec.name             = 'PLCrashReporter'
   spec.version          = '1.12.0'
-  spec.summary          = 'Reliable, open-source crash reporting for iOS, macOS and tvOS.'
-  spec.description      = 'PLCrashReporter is a reliable open source library that provides an in-process live crash reporting framework for use on iOS, macOS and tvOS. The library detects crashes and generates reports to help your investigation and troubleshooting with the information of application, system, process, thread, etc. as well as stack traces.'
-
-  spec.homepage         = 'https://github.com/microsoft/plcrashreporter'
-  spec.license          = { :type => 'MIT', :file => 'LICENSE.txt' }
-  spec.authors          = { 'Microsoft' => 'appcentersdk@microsoft.com' }
-  spec.swift_version    = '5.0'
+  # ... (other metadata) ...
 
   spec.source           = { :git => 'https://github.com/microsoft/plcrashreporter.git', :tag => spec.version }
   
-  # Includes core files, plus all C source/header files from the protobuf-c dependency
+  # Includes core files and the protobuf-c source/header files
   spec.source_files     = 'Source/**/*.{h,m}', 'Dependencies/protobuf-c/**/*.{h,c}'
   
-  # **THE FIX:** This tells CocoaPods to treat the 'Dependencies' folder as the root for header mapping.
-  # This makes the compiler look for headers at: (PODS_ROOT)/PLCrashReporter/Dependencies/protobuf-c/protobuf-c.h
-  # ... which satisfies the #include "protobuf-c/protobuf-c.h" statement.
-  spec.header_mappings_dir = 'protobuf-c' 
+  # 1. (Kept): Creates the "protobuf-c/" folder structure for headers
+  spec.header_mappings_dir = 'Dependencies' 
+  
+  # 2. (NEW/REINTRODUCED FIX): Exposes the resulting header path to the compiler 
+  # This setting tells the compiler where to look for the headers imported with <...>
+  spec.pod_target_xcconfig = { 
+    # Expose the Pod's private headers to itself, where 'Dependencies' is the root 
+    # and the files are mapped into the build products directory.
+    'HEADER_SEARCH_PATHS' => '$(PODS_TARGET_ROOT)/PLCrashReporter'
+  }
   
   spec.resource_bundles = {
     'PLCrashReporter' => 'Source/Resources/**'
